@@ -8,7 +8,6 @@ import MenuItem from 'material-ui/MenuItem'
 import {Card, CardTitle, CardText} from 'material-ui/Card'
 import MuiTreeList from './MuiTreeList'
 import TreeList from './TreeList'
-import {listItems} from './data'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import logo from './logo.svg';
 import './App.css';
