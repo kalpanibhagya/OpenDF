@@ -134,18 +134,73 @@ class App extends Component {
   }
 
   render() {
+    const {listItems, listItemIsEnabled, expandedListItems, activeListItem, searchTerm} = this.state
+
+  const icons = {
+    leftIconCollapsed: <i style={{height: 16, width: 16, color: '#CCCCCC'}} className="fa fa-caret-right" />,
+    leftIconExpanded: <i style={{height: 16, width: 16, color: '#CCCCCC'}} className="fa fa-caret-down" />
+  }
+
+  let treeListJSX
+  if (this.state.isUsingMuiTheme) {
+    treeListJSX = (
+            <MuiTreeList 
+              listItems={listItems}
+              contentKey={'title'}
+              useFolderIcons={true}
+              haveSearchbar={true}
+              listItemIsEnabled={listItemIsEnabled}
+              expandedListItems={expandedListItems}
+              activeListItem={activeListItem}
+              handleTouchTap={this.handleTouchTap}
+              handleTouchTapInSearchMode={this.handleTouchTapInSearchMode}
+              handleSearch={this.handleSearch}
+              searchTerm={searchTerm}
+              >
+              <Subheader>Material UI Version</Subheader>
+            </MuiTreeList>      
+    )
+  } 
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <MuiThemeProvider>
+        <div>
+          <Drawer
+            open={true}
+            width={400}>
+            {treeListJSX}
+          </Drawer>
+          <div style={{paddingLeft: 400}}>
+            <div style={{width: 600, height: 400, margin: '20px auto'}}>
+              <div style={{marginTop: 20}}>
+                <RaisedButton 
+                  label="Collapse All"
+                  primary={true}
+                  style={{marginRight: 10}}
+                  onClick={this.collapseAll} />
+                <RaisedButton 
+                  label="Previous"
+                  secondary={true}
+                  style={{marginRight: 10}}
+                  onClick={this.moveToPrev} />
+                <RaisedButton 
+                  label="Next"
+                  secondary={true}
+                  onClick={this.moveToNext} />
+              </div>
+              <Card
+                style={{marginTop: 20}}>
+                <CardTitle title={listItems[activeListItem].title} />
+                <CardText>
+                  {listItems[activeListItem].content}
+                </CardText>
+              </Card>
+            </div>
+          </div>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      </MuiThemeProvider>
     );
   }
+
 }
 
 export default App;
